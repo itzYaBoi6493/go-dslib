@@ -1,7 +1,11 @@
 package stack
 
-import "testing"
-import "fmt"
+import (
+    "testing"
+    "fmt"
+    "math/rand"
+    "time"
+)
 
 func TestNew(t *testing.T) {
     s := New()
@@ -29,10 +33,16 @@ func TestPush(t *testing.T) {
 
 func TestPop(t *testing.T) {
     s := New()
-    vals := []interface{}{1, 2, 3, 4, 5}
+    n := 20
+    rand.Seed(time.Time{}.Unix())
+    vals := make([]interface{}, 0, n)
+    for i := 0; i < n; i++ {
+        vals = append(vals, rand.Int())
+    }
     s.Push(vals...)
+    fmt.Println("TestPop: Size: ", s.Size())
 
-    for i := s.Size() - 1; i >= 0; i-- {
+    for i := n - 1; i >= 0; i-- {
         data, ok := s.Pop()
         if !ok {
             t.Errorf("Pop: Spurious false value from non-empty stack")
@@ -46,5 +56,25 @@ func TestPop(t *testing.T) {
 
     if !s.Empty() {
         t.Errorf("Pop: non-empty stack after all pops")
+    }
+}
+
+func TestPeek(t *testing.T) {
+    s := New()
+    n := 15;
+    rand.Seed(time.Time{}.Unix())
+
+    want := rand.Int()
+    for i := 0; i < n - 1; i++ {
+        s.Push(rand.Int())
+    }
+    s.Push(want)
+
+    if data, ok := s.Peek(); ok {
+        if *data != want {
+            t.Errorf("Peek: incorrect top: got %v, wanted %v", *data, want)
+        }
+    } else {
+        t.Errorf("Peek: invalid return status")
     }
 }
