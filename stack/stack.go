@@ -16,7 +16,7 @@ type Stack struct {
     size int
 }
 
-// New() creates and returns a new empty stack.
+// New creates and returns a new empty stack.
 func New() Stack {
     return Stack {
         head: nil,
@@ -24,12 +24,12 @@ func New() Stack {
     }
 }
 
-// Size() returns the number of elements in the stack currently.
+// Size returns the number of elements in the stack currently.
 func (s *Stack) Size() int {
     return s.size
 }
 
-// Push() takes any number of arguments (variadic function) and adds each one
+// Push takes any number of arguments (variadic function) and adds each one
 // of them to the stack top. The last argument supplied is at the top after
 // the Push operation. Returns true on success and false on failure
 func (s *Stack) Push(vals ...interface{}) bool {
@@ -51,7 +51,7 @@ func (s *Stack) Push(vals ...interface{}) bool {
     return true
 }
 
-// String() allows to print the stack. Can be used with fmt.Print or the likes.
+// String allows to print the stack. Can be used with fmt.Print or the likes.
 func (s Stack) String() string {
     res := ""
     sep := " "
@@ -64,7 +64,7 @@ func (s Stack) String() string {
     return res
 }
 
-// Empty() returns if a stack is empty. Returns true if stack has 0 elements
+// Empty returns if a stack is empty. Returns true if stack has 0 elements
 // and false otherwise
 func (s *Stack) Empty() bool {
     if s == nil || s.size == 0 {
@@ -73,7 +73,8 @@ func (s *Stack) Empty() bool {
     return false
 }
 
-// Pop() returns the top of the Stack, if it exists. Else, it returns false.
+// Pop returns the top of the Stack and removes it from the stack, if it exists.
+// Returns the data and ok (bool). If the top exists, ok = true. False otherwise.
 func (s *Stack) Pop() (interface{}, bool) {
     if s == nil || s.Empty() {
         return nil, false
@@ -85,11 +86,22 @@ func (s *Stack) Pop() (interface{}, bool) {
     return oldHead.data, true
 }
 
-// Clear() resets the stack.
+// Clear resets the stack.
 func (s *Stack) Clear() {
     if s != nil {
         // let the GC do all the work
         s.head = nil
         s.size = 0
     }
+}
+
+// Peek returns the top of the stack without popping off, if it exists.
+// Returns a pointer to the data and a bool(ok), which denotes successful query of the top.
+// If the top exists, ok = true. False otherwise
+func (s *Stack) Peek() (*interface{}, bool) {
+    if s == nil || s.Empty() {
+        return nil, false
+    }
+
+    return &s.head.data, true
 }
