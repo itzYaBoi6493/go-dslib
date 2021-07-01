@@ -17,13 +17,13 @@ type node struct {
 // front of the struct is the tail of the doubly linked list and
 // back of the struct is the head of the doubly linked list.
 type Deque struct {
-	size int
+	size        int
 	front, back *node
 }
 
 // New creates and returns an empty Deque.
 func New() Deque {
-	return Deque {}
+	return Deque{}
 }
 
 // Size returns the number of elements in the Deque currently.
@@ -47,7 +47,7 @@ func (d *Deque) PushFront(data interface{}) bool {
 		return false
 	}
 	// create a new node out of the data
-	newNode := node {
+	newNode := node{
 		data: data,
 		prev: d.front,
 	}
@@ -68,7 +68,7 @@ func (d *Deque) PushBack(data interface{}) bool {
 		return false
 	}
 	// create a new node
-	newNode := node {
+	newNode := node{
 		data: data,
 		next: d.back,
 	}
@@ -153,8 +153,8 @@ func (d *Deque) Front() (*interface{}, bool) {
 	return &d.front.data, true
 }
 
-// Back returns a pointer to the element at the back without removing the element, if it exists. 
-// Returns a pointer to the data and a bool, which is true if the back element 
+// Back returns a pointer to the element at the back without removing the element, if it exists.
+// Returns a pointer to the data and a bool, which is true if the back element
 // can be successfully extracted and false otherwise.
 func (d *Deque) Back() (*interface{}, bool) {
 	if d.Empty() {
